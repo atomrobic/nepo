@@ -29,7 +29,15 @@ ALLOWED_HOSTS = ["*", "student-register-production.up.railway.app"]
 
 
 # Application definition
+import os
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+ALLOWED_HOSTS = ["*", "nepo-production.up.railway.app"]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
