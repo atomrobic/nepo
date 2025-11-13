@@ -73,22 +73,33 @@ WSGI_APPLICATION = 'student_register.wsgi.application'
 # ---------------------------------------------------------
 # DATABASE
 # ---------------------------------------------------------
-# Railway provides DATABASE_URL automatically when PostgreSQL is added
-DATABASE_URL = os.environ.get('DATABASE_URL')
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  # Use PostgreSQL
+#         'NAME': 'postgres',                          # Your database name
+#         'USER': 'postgres.gxsrppszhwpdltgwtriv',                          # Database user
+#         'PASSWORD': 'akhilappu007@',                # Database password
+#         'HOST': 'aws-1-ap-southeast-1.pooler.supabase.com',                         # Database host
+#         'PORT': '6543',                              # Default PostgreSQL port
+#     }
+# }
+import os
+from pathlib import Path
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ---------------------------------------------------------
+# Fetch PostgreSQL credentials from environment variables
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'postgres'),      # Default fallback
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
+}
+
 # PASSWORD VALIDATION
 # ---------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
